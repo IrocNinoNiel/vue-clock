@@ -41,6 +41,7 @@
             stopTimer() {
                 clearInterval(this.timerInterval);
                 this.timerInterval = null;
+                this.timePassed = 0;
                 this.started = false;
             },
             pauseTimer() {
