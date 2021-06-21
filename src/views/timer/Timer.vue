@@ -1,24 +1,28 @@
 <template>
     <div>
         <h1>Timer</h1>
+        <VueTimerHeader @set-time="getTime"/>
         <br/>
-        <VueTimer :time-left="timeLeft" :timeLimit="timeLimit"/> 
+        <VueTimer :time-left="timeLeft" :timeLimit="timeLimit" :started="started" /> 
         <br/>
         <button class="button" :style="{background:'#4CAF50'}" @click="startTimer" v-show="!started">Start</button>
-        <button class="button" :style="{background:'#f44336'}" @click="stopTimer" v-show="started">Stop</button>
+        <button class="button" :style="{background:'yellow'}" @click="pauseTimer" v-show="started">Pause</button>
+        <button class="button" :style="{background:'red'}" @click="stopTimer" v-show="started">Stop</button>
     </div>
 </template>
 
 <script>
     import VueTimer from '../../components/Vuetimer.vue'
+    import VueTimerHeader from '../../components/VueTimerHeader.vue'
     export default {
         name:'Timer',
         components:{
             VueTimer,
+            VueTimerHeader,
         },
         data() {
             return {
-                timeLimit: 20,
+                timeLimit: 0,
                 timePassed: 0,
                 timerInterval: null,
                 started: false,
@@ -36,7 +40,15 @@
             },
             stopTimer() {
                 clearInterval(this.timerInterval);
+                this.timerInterval = null;
                 this.started = false;
+            },
+            pauseTimer() {
+                clearInterval(this.timerInterval);
+                this.started = false;
+            },
+            getTime(payload) {
+                this.timeLimit = (payload.minutes * 60) + payload.seconds;
             }
             
         },

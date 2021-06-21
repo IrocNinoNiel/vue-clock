@@ -49,7 +49,7 @@
                     return `${minutes}:${seconds}`
                } 
 
-               if (seconds == 0) {
+               if (seconds == 0 && this.started) {
                    alert("Time's Up");
                }
 
@@ -107,6 +107,10 @@
                 type: Number,
                 default: 10
             },
+            started: {
+              type: Boolean,
+              default: false
+            }
         }
     }
 </script>
